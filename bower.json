@@ -1,0 +1,21 @@
+{
+  "name": "visual-js-interpreter",
+  "version": "0.0.0",
+  "homepage": "https://github.com/mcreinhard/visual-js-interpreter",
+  "authors": [
+    "Michael Reinhard <mcreinhard@gmail.com>"
+  ],
+  "description": "Instructional JavaScript interpreter with visualizations",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "esprima": "~1.2.2"
+  }
+}

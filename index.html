@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Visual Interpreter</title>
+    <script src="bower_components/esprima/esprima.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/prelude-ls/browser/prelude-browser.js"></script>
+    <script src="interpreter.js"></script>
+  </head>
+  <body>
+    <input type="text" name="code" class="code"/>
+    <button class="run">run</button>
+    <div class="console"></div>
+  </body>
+  <script>
+    $(function() {
+      $('.run').on('click', function() {
+        run($('.code').val());
+      });
+    });
+
+    var printInConsole = function(string) {
+      $('.console').append($('<p><' + '/p>').text(string));
+    };
+  </script>
+</html>
+
