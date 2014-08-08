@@ -1,27 +1,29 @@
-globalScope = {}
-globalScope.__parent__ = null
+{map, listsToObj} = require 'prelude-ls'
 
-globalScope.log =
-  __type__: "NativeFunction"
-  __value__: printInConsole
+globalScope = __parent__: null
 
-apply = (f, args) ->
+@init = ->
+  globalScope.log =
+    __type__: \NativeFunction
+    __value__: printInConsole
+
+apply = (f, args) -->
   switch f?.__type__
-  | "NativeFunction" => f.__value__.apply @, args
-  | "DefinedFunction" =>
-    newScope = Object.create f.__scope__
-    newScope.__parent__ = f.__scope__
-    for parameter, i in f.__params__
-      newScope[parameter] = args[i]
-    return evaluate newScope, f.__body__
-  | _ => printInConsole "TypeError: #{typeof f} is not a function"
+  | \NativeFunction => f.__value__ ...args
+  | \DefinedFunction =>
+    newScope = f.__scope__ with
+      (lists-to-obj f.__params__, args) <<< __parent__: f.__scope__
+    evaluate newScope, f.__body__
+  | _ =>
+    printInConsole "TypeError: #{typeof f} is not a function"
+    return void
 
 evaluate = (scope, expr) -->
   switch expr.type
   | "Literal" => expr.value
   | "Identifier" => scope[expr.name]
   | "CallExpression" =>
-    apply evaluate(scope, expr.callee), expr.arguments.map(evaluate scope)
+    (apply evaluate(scope, expr.callee)) . map (evaluate scope) <| expr.arguments
   | "BinaryExpression" =>
     switch expr.operator
     | "+" => evaluate(scope, expr.left) + evaluate(scope, expr.right)
@@ -45,7 +47,7 @@ evaluate = (scope, expr) -->
     return void
   | "AssignmentExpression" =>
     switch expr.operator
-    | "=" => setVariable(scope, expr.left.name, evaluate scope, expr.right)
+    | "=" => setVariable(scope, expr.left.name, evaluate(scope, expr.right))
   | "ExpressionStatement" =>
     evaluate(scope, expr.expression)
 

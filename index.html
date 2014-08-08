@@ -1,25 +1,13 @@
 <!DOCTYPE html>
 <html>
+  <meta charset="UTF8">
   <head>
     <title>Visual Interpreter</title>
     <script src="bower_components/esprima/esprima.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
     <script src="bower_components/prelude-ls/browser/prelude-browser.js"></script>
-    <script>
-      $(function() {
-        $('.run').on('click', function() {
-          run($('.code').val());
-        });
-      });
-
-      var printInConsole = function(string) {
-        $('.console').append($('<p><' + '/p>').text(string));
-      };
-
-      var showResult = function(string) {
-        $('.result').text(JSON.stringify(string) || "undefined");
-      };
-    </script>
+    <script src="layout.js"></script>
     <script src="interpreter.js"></script>
   </head>
   <body>
