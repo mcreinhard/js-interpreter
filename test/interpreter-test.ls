@@ -63,6 +63,3 @@ describe 'Interpreter', ->
       run 'var g = f()'
       run 'g(); g(); g(); g(); g()'
       consoleArray.should.deep.equal [1 2 3 4 5]
-
-
-
